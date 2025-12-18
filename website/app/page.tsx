@@ -1,5 +1,6 @@
 import Hero from "@/components/home/Hero";
 import Initiatives from "@/components/home/Initiatives";
+import { GlobalImpact } from "@/components/home/GlobalImpact";
 import Stories from "@/components/home/Stories";
 import Donation from "@/components/home/Donation";
 import Newsletter from "@/components/home/Newsletter";
@@ -9,6 +10,7 @@ export default function Home() {
     <main className="min-h-screen bg-white dark:bg-zinc-950">
       <Hero />
       <Initiatives />
+      <GlobalImpact />
       <Stories />
       <Donation />
       <Newsletter />
