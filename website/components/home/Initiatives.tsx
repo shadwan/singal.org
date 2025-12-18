@@ -102,7 +102,7 @@ function InitiativeCard({
 
 export default function Initiatives() {
 	return (
-		<section className="py-16 md:py-24 bg-white overflow-hidden relative">
+		<section className="py-4 md:py-8 bg-white overflow-hidden relative">
 			{/* Dotted Map Background */}
 			<div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
 				{/* Map dots - low opacity */}

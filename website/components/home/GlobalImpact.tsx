@@ -36,7 +36,6 @@ const GLOBE_CONFIG = {
 		// Tanzania - Entrepreneurship
 		{ location: [-6.369, 34.8888] as [number, number], size: 0.05 },
 	],
-	offset: [0, 40]
 };
 
 const stats = [
