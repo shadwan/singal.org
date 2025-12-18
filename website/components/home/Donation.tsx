@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { NumberTicker } from "@/components/ui/number-ticker";
+import { Ripple } from "@/components/ui/ripple";
 import { Heart } from "lucide-react";
 
 const donationTiers = [
@@ -14,10 +15,19 @@ export default function Donation() {
 	return (
 		<section className="py-16 md:py-24 bg-white">
 			<div className="container mx-auto px-4">
-				{/* Main Card Container - like Hero */}
-				<div className="relative bg-[#f8d264] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden">
+				{/* Main Card Container */}
+				<div className="relative bg-[#f8d264] rounded-3xl p-8 md:p-12 lg:p-16 overflow-hidden min-h-[600px] flex items-center justify-center">
+					
+					{/* Ripple Background Effect */}
+					<Ripple 
+						mainCircleSize={180}
+						mainCircleOpacity={0.6}
+						numCircles={12}
+						className="[--foreground:#c9952c] [mask-image:none]"
+					/>
 
-					<div className="relative z-10">
+					{/* Main Content */}
+					<div className="relative z-10 max-w-2xl mx-auto">
 						{/* Section Header */}
 						<div className="text-center mb-10 md:mb-12">
 							<span className="inline-block px-4 py-1.5 bg-gray-900 text-white rounded-full text-sm font-medium mb-4">
@@ -50,14 +60,14 @@ export default function Donation() {
 						</div>
 
 						{/* Donation Tiers */}
-						<div className="grid md:grid-cols-3 gap-4 mb-10 max-w-3xl mx-auto">
+						<div className="grid md:grid-cols-3 gap-4 mb-10">
 							{donationTiers.map((tier, index) => (
 								<button
 									key={tier.amount}
-									className={`group relative p-5 rounded-2xl border-2 transition-all duration-300 text-left ${
+									className={`group relative p-5 rounded-2xl border-2 transition-all duration-300 text-left backdrop-blur-sm ${
 										index === 1
 											? "border-gray-900 bg-gray-900"
-											: "border-gray-900/20 hover:border-gray-900/50 bg-white/30"
+											: "border-gray-900/20 hover:border-gray-900/50 bg-white/60"
 									}`}
 								>
 									<div className="flex items-center gap-2 mb-2">
