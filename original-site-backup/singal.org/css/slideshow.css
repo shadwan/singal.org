@@ -1,0 +1,19 @@
+.donate_area .image-container {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    transition: all 1.25s ease-in-out .5s;
+    overflow: hidden;
+    height: auto;
+}
+.donate_area .image-container .bk-image {
+    position: relative;
+    width:100%;
+    min-height: auto;
+    max-height: 100%;
+}
+.donate_area .container {
+    z-index: 2;
+    position: relative;
+}
