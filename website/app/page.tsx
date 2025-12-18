@@ -3,7 +3,7 @@ import Initiatives from "@/components/home/Initiatives";
 import { GlobalImpact } from "@/components/home/GlobalImpact";
 import Stories from "@/components/home/Stories";
 import Donation from "@/components/home/Donation";
-import Newsletter from "@/components/home/Newsletter";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <GlobalImpact />
       <Stories />
       <Donation />
-      <Newsletter />
+      <Footer />
     </main>
   );
 }
