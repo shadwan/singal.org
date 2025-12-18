@@ -16,13 +16,13 @@ import {
 
 // Project location markers with lat/lng coordinates
 const locationMarkers = [
-	{ lat: 19.076, lng: 72.8777, size: 1.5 }, // Mumbai, India (Education, Medical, Shelter)
-	{ lat: 29.2985, lng: 82.1839, size: 1.0 }, // Jumla, Nepal (Shelter Homes)
-	{ lat: 39.0839, lng: -77.1528, size: 1.0 }, // Rockville, Maryland (Youth, Shelter)
-	{ lat: 29.7604, lng: -95.3698, size: 1.0 }, // Houston, Texas (Disaster Relief)
-	{ lat: -1.2921, lng: 36.8219, size: 1.0 }, // Kenya (Entrepreneurship)
-	{ lat: 0.3476, lng: 32.5825, size: 1.0 }, // Uganda (Entrepreneurship)
-	{ lat: -6.3690, lng: 34.8888, size: 1.0 }, // Tanzania (Entrepreneurship)
+	{ lat: 19.076, lng: 72.8777, size: .5 }, // Mumbai, India (Education, Medical, Shelter)
+	{ lat: 29.2985, lng: 82.1839, size: .5 }, // Jumla, Nepal (Shelter Homes)
+	{ lat: 39.0839, lng: -77.1528, size: .5 }, // Rockville, Maryland (Youth, Shelter)
+	{ lat: 29.7604, lng: -95.3698, size: .5 }, // Houston, Texas (Disaster Relief)
+	{ lat: -1.2921, lng: 36.8219, size: .5 }, // Kenya (Entrepreneurship)
+	{ lat: 0.3476, lng: 32.5825, size: .5 }, // Uganda (Entrepreneurship)
+	{ lat: -6.3690, lng: 34.8888, size: .5 }, // Tanzania (Entrepreneurship)
 ];
 
 const initiatives = [
