@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -60,6 +60,17 @@ const projects = [
 
 export default function Hero() {
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [isMobile, setIsMobile] = useState(false);
+
+	// Detect mobile screen
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
 
 	// Auto-shuffle cards
 	useEffect(() => {
@@ -70,7 +81,7 @@ export default function Hero() {
 	}, []);
 
 	// Get card position relative to center
-	const getCardStyle = (index: number) => {
+	const getCardStyle = useCallback((index: number) => {
 		const totalCards = projects.length;
 		let diff = index - currentIndex;
 		
@@ -79,7 +90,8 @@ export default function Hero() {
 		if (diff < -totalCards / 2) diff += totalCards;
 
 		const isCenter = diff === 0;
-		const isVisible = Math.abs(diff) <= 2;
+		// Show fewer cards on mobile
+		const isVisible = isMobile ? Math.abs(diff) <= 1 : Math.abs(diff) <= 2;
 
 		if (!isVisible) {
 			return {
@@ -94,15 +106,18 @@ export default function Hero() {
 		// Scale decreases more for cards further from center
 		const scale = isCenter ? 1 : Math.abs(diff) === 1 ? 0.8 : 0.65;
 		const blur = isCenter ? 0 : Math.abs(diff) === 1 ? 4 : 8;
+		
+		// Less translation on mobile for tighter spacing
+		const translatePercent = isMobile ? 55 : 70;
 
 		return {
-			transform: `translateX(${diff * 70}%) scale(${scale})`,
+			transform: `translateX(${diff * translatePercent}%) scale(${scale})`,
 			opacity: isCenter ? 1 : 0.7,
 			zIndex: isCenter ? 30 : 20 - Math.abs(diff),
 			filter: `blur(${blur}px)`,
 			isCenter,
 		};
-	};
+	}, [currentIndex, isMobile]);
 
 	return (
 		<section className="bg-white py-16 lg:py-24">
@@ -142,11 +157,11 @@ export default function Hero() {
 					{/* Carousel */}
 					<div className="relative">
 						{/* Yellow gradient fade on edges */}
-						<div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-[#f8d264] via-[#f8d264] to-transparent z-40 pointer-events-none" />
-						<div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-[#f8d264] via-[#f8d264] to-transparent z-40 pointer-events-none" />
+						<div className="absolute left-0 top-0 bottom-0 w-4 md:w-40 bg-gradient-to-r from-[#f8d264] to-transparent z-40 pointer-events-none" />
+						<div className="absolute right-0 top-0 bottom-0 w-4 md:w-40 bg-gradient-to-l from-[#f8d264] to-transparent z-40 pointer-events-none" />
 
 						{/* Cards Container */}
-						<div className="relative h-[420px] flex items-center justify-center overflow-hidden">
+						<div className="relative h-[340px] md:h-[420px] flex items-center justify-center overflow-hidden">
 							{projects.map((project, index) => {
 								const style = getCardStyle(index);
 								const IconComponent = project.icon;
@@ -165,7 +180,7 @@ export default function Hero() {
 										onClick={() => setCurrentIndex(index)}
 									>
 										<div 
-											className="relative w-[260px] md:w-[300px] h-[380px] md:h-[400px] rounded-2xl overflow-hidden"
+											className="relative w-[220px] md:w-[300px] h-[300px] md:h-[400px] rounded-2xl overflow-hidden"
 											style={{
 												boxShadow: style.isCenter ? "-20px 0 25px -15px rgba(0,0,0,0.3), 20px 0 25px -15px rgba(0,0,0,0.3)" : "none",
 											}}
@@ -180,23 +195,23 @@ export default function Hero() {
 											<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
 											{/* Content */}
-											<div className="absolute inset-0 p-5 flex flex-col justify-between transition-none">
+											<div className="absolute inset-0 p-4 md:p-5 flex flex-col justify-between transition-none">
 												{/* Badge Pill */}
-												<div className="flex items-center gap-2 bg-black/30 pl-2 pr-4 py-1.5 rounded-full w-fit transition-none">
-													<IconComponent className="w-4 h-4 text-white/90 transition-none" />
-													<span className="text-white/90 text-sm font-medium transition-none">
+												<div className="flex items-center gap-1.5 md:gap-2 bg-black/30 pl-2 pr-3 md:pr-4 py-1 md:py-1.5 rounded-full w-fit transition-none">
+													<IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-white/90 transition-none" />
+													<span className="text-white/90 text-xs md:text-sm font-medium transition-none">
 														{project.name}
 													</span>
 												</div>
 
 												{/* Impact & Location */}
 												<div className="transition-none">
-													<p className="text-white text-xl md:text-2xl font-bold mb-2 drop-shadow-lg transition-none">
+													<p className="text-white text-base md:text-2xl font-bold mb-1 md:mb-2 drop-shadow-lg transition-none">
 														{project.impact}
 													</p>
-													<div className="flex items-center gap-1.5 text-white/90 text-sm md:text-base transition-none">
+													<div className="flex items-center gap-1 md:gap-1.5 text-white/90 text-xs md:text-base transition-none">
 														<svg
-															className="w-4 h-4 transition-none"
+															className="w-3.5 h-3.5 md:w-4 md:h-4 transition-none"
 															fill="currentColor"
 															viewBox="0 0 20 20"
 														>
