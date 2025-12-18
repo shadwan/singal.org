@@ -5,13 +5,14 @@ import { NumberTicker } from "@/components/ui/number-ticker";
 import { Marquee } from "@/components/ui/marquee";
 
 // Globe config - light mode like MagicUI example
+// theta controls vertical tilt (higher = see more of top)
 const GLOBE_CONFIG = {
   width: 800,
   height: 800,
   onRender: () => {},
   devicePixelRatio: 2,
   phi: 0,
-  theta: 0.3,
+  theta: -0.3, // Negative to tilt and show top of globe
   dark: 0, // Light mode
   diffuse: 0.4,
   mapSamples: 16000,
@@ -117,7 +118,7 @@ export function GlobalImpact() {
           </div>
 
           {/* Countries Marquee */}
-          <div className="mt-8 md:mt-10">
+          <div className="mt-6 md:mt-8">
             <Marquee pauseOnHover className="[--duration:40s]">
               {countries.map((country) => (
                 <CountryCard 
@@ -130,16 +131,16 @@ export function GlobalImpact() {
             </Marquee>
           </div>
 
-          {/* Globe Container - seamless with bottom */}
-          <div className="relative h-[250px] md:h-[320px] lg:h-[380px] mt-4">
+          {/* Globe Container - clips bottom 20% */}
+          <div className="relative h-[340px] md:h-[480px] lg:h-[600px] overflow-hidden -mb-[60px] md:-mb-[80px] lg:-mb-[100px] mt-4 md:mt-6 lg:mt-8">
             {/* Glow effect behind globe */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/4 w-[400px] h-[200px] md:w-[600px] md:h-[300px] bg-white/5 rounded-full blur-3xl" />
+            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white/10 rounded-full blur-3xl" />
             
-            {/* Globe - positioned so top portion shows */}
-            <div className="absolute left-1/2 -translate-x-1/2 -top-[120px] md:-top-[160px] lg:-top-[180px] w-[500px] h-[500px] md:w-[700px] md:h-[700px] lg:w-[800px] lg:h-[800px]">
+            {/* Globe centered */}
+            <div className="relative w-full h-full flex items-center justify-center">
               <Globe 
                 config={GLOBE_CONFIG}
-                className="w-full h-full"
+                className="!relative !inset-auto w-[400px] h-[400px] md:w-[550px] md:h-[550px] lg:w-[700px] lg:h-[700px] !max-w-none"
               />
             </div>
           </div>
