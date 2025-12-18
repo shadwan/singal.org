@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
+import { DottedMap } from "@/components/ui/dotted-map";
 import {
 	AcademicCapIcon,
 	HomeIcon,
@@ -12,6 +13,17 @@ import {
 	ShieldExclamationIcon,
 	CpuChipIcon,
 } from "@heroicons/react/24/solid";
+
+// Project location markers with lat/lng coordinates
+const locationMarkers = [
+	{ lat: 19.076, lng: 72.8777, size: 1.5 }, // Mumbai, India (Education, Medical, Shelter)
+	{ lat: 29.2985, lng: 82.1839, size: 1.0 }, // Jumla, Nepal (Shelter Homes)
+	{ lat: 39.0839, lng: -77.1528, size: 1.0 }, // Rockville, Maryland (Youth, Shelter)
+	{ lat: 29.7604, lng: -95.3698, size: 1.0 }, // Houston, Texas (Disaster Relief)
+	{ lat: -1.2921, lng: 36.8219, size: 1.0 }, // Kenya (Entrepreneurship)
+	{ lat: 0.3476, lng: 32.5825, size: 1.0 }, // Uganda (Entrepreneurship)
+	{ lat: -6.3690, lng: 34.8888, size: 1.0 }, // Tanzania (Entrepreneurship)
+];
 
 const initiatives = [
 	{
@@ -90,8 +102,32 @@ function InitiativeCard({
 
 export default function Initiatives() {
 	return (
-		<section className="py-16 md:py-24 bg-white overflow-hidden">
-			<div className="container mx-auto px-4">
+		<section className="py-16 md:py-24 bg-white overflow-hidden relative">
+			{/* Dotted Map Background */}
+			<div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+				{/* Map dots - low opacity */}
+				<div className="absolute w-full max-w-[1400px] aspect-[2/1] opacity-[0.12]">
+					<DottedMap
+						markers={[]}
+						dotColor="#9ca3af"
+						markerColor="#dc2626"
+						mapSamples={5000}
+						dotRadius={0.20}
+					/>
+				</div>
+				{/* Location markers - full opacity */}
+				<div className="absolute w-full max-w-[1400px] aspect-[2/1]">
+					<DottedMap
+						markers={locationMarkers}
+						dotColor="transparent"
+						markerColor="#f8d264"
+						mapSamples={5000}
+						dotRadius={0}
+					/>
+				</div>
+			</div>
+
+			<div className="container mx-auto px-4 relative z-10">
 				<div className="text-center mb-8 md:mb-12">
 					<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
 						Our Initiatives
