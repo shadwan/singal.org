@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { DottedMap } from "@/components/ui/dotted-map";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { Button } from "@/components/ui/button";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import {
 	AcademicCapIcon,
 	HomeIcon,
@@ -77,6 +82,12 @@ const initiatives = [
 	},
 ];
 
+const riseAIStats = [
+	{ value: 10000, label: "Students by 2026", prefix: "", suffix: "" },
+	{ value: 8, label: "Belt Certifications", prefix: "", suffix: "" },
+	{ value: 100, label: "Per Child/Year", prefix: "$", suffix: "" },
+];
+
 function InitiativeCard({
 	initiative,
 }: {
@@ -102,7 +113,7 @@ function InitiativeCard({
 
 export default function Initiatives() {
 	return (
-		<section className="py-4 md:py-8 bg-white overflow-hidden relative">
+		<section className="py-8 md:py-12 bg-white overflow-hidden relative">
 			{/* Dotted Map Background */}
 			<div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
 				{/* Map dots - low opacity */}
@@ -128,8 +139,9 @@ export default function Initiatives() {
 			</div>
 
 			<div className="container mx-auto px-4 relative z-10">
-				<div className="text-center mb-8 md:mb-12">
-					<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
+				{/* Section Title */}
+				<div className="text-center mb-10 md:mb-14">
+					<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">
 						Our Initiatives
 					</h2>
 					<p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -138,8 +150,89 @@ export default function Initiatives() {
 					</p>
 				</div>
 
+				{/* RiseAI Featured Card */}
+				<div className="max-w-4xl mx-auto mb-12 md:mb-16">
+					<div className="relative bg-gray-50 rounded-2xl p-6 md:p-8">
+						<ShineBorder
+							shineColor={["#f8d264", "#8B5CF6", "#f8b864"]}
+							borderWidth={2}
+							duration={10}
+						/>
+						<div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+							{/* Left Content */}
+							<div>
+								<span className="inline-block px-3 py-1 bg-gray-100 border border-gray-200 rounded-full text-xs font-semibold mb-3">
+									<AnimatedGradientText
+										colorFrom="#f8d264"
+										colorTo="#8B5CF6"
+										speed={1.5}
+									>
+										NEW INITIATIVE
+									</AnimatedGradientText>
+								</span>
+								<h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+									Rise<span className="text-[#f8d264]">AI</span>
+								</h3>
+								<p className="text-gray-900 font-medium mb-3">
+									The Next Evolution of Education
+								</p>
+								<p className="text-gray-600 text-sm leading-relaxed mb-5">
+									We&apos;re not teaching kids about AI. We&apos;re teaching them to 
+									partner with AI to solve bigger problems, multiply their ideas, 
+									and build the future they want to see.
+								</p>
+
+								{/* Stats */}
+								<div className="flex gap-6 mb-5">
+									{riseAIStats.map((stat, index) => (
+										<div key={stat.label}>
+											<div className="flex items-baseline gap-0.5">
+												{stat.prefix && (
+													<span className="text-xl font-bold text-gray-900">
+														{stat.prefix}
+													</span>
+												)}
+												<NumberTicker
+													value={stat.value}
+													delay={index * 0.15}
+													className="text-xl font-bold text-gray-900 font-mono"
+												/>
+											</div>
+											<p className="text-gray-500 text-xs">
+												{stat.label}
+											</p>
+										</div>
+									))}
+								</div>
+
+								<Button
+									size="sm"
+									className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full"
+								>
+									Learn More
+									<ArrowRight className="ml-2 w-4 h-4" />
+								</Button>
+							</div>
+
+							{/* Right - Video */}
+							<div className="order-first md:order-last">
+								<div className="aspect-[4/3] rounded-xl overflow-hidden">
+									<video
+										src="/images/riseaiheader.mp4"
+										autoPlay
+										loop
+										muted
+										playsInline
+										className="w-full h-full object-cover"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				{/* Orbiting Circles Container - Desktop */}
-				<div className="relative hidden md:flex h-[700px] lg:h-[800px] w-full items-center justify-center">
+				<div className="relative hidden md:flex h-[600px] lg:h-[700px] w-full items-center justify-center">
 					{/* Center Logo */}
 					<div className="absolute z-10 flex items-center justify-center">
 						<div className="bg-[#f8d264] rounded-full w-28 h-28 lg:w-32 lg:h-32 shadow-xl flex items-center justify-center p-5 lg:p-6 aspect-square">
@@ -153,7 +246,7 @@ export default function Initiatives() {
 						</div>
 					</div>
 
-					{/* Inner Orbit - 2 cards (RiseAI featured + Education) */}
+					{/* Inner Orbit - 2 cards */}
 					<OrbitingCircles
 						radius={140}
 						duration={35}
@@ -161,8 +254,8 @@ export default function Initiatives() {
 						iconSize={120}
 						speed={0.5}
 					>
-						<InitiativeCard initiative={initiatives[0]} />
 						<InitiativeCard initiative={initiatives[1]} />
+						<InitiativeCard initiative={initiatives[2]} />
 					</OrbitingCircles>
 
 					{/* Middle Orbit - 3 cards (reverse) */}
@@ -174,26 +267,25 @@ export default function Initiatives() {
 						speed={0.4}
 						reverse
 					>
-						<InitiativeCard initiative={initiatives[2]} />
 						<InitiativeCard initiative={initiatives[3]} />
 						<InitiativeCard initiative={initiatives[4]} />
+						<InitiativeCard initiative={initiatives[5]} />
 					</OrbitingCircles>
 
-					{/* Outer Orbit - 2 cards */}
+					{/* Outer Orbit - 1 card */}
 					<OrbitingCircles
-						radius={360}
+						radius={340}
 						duration={55}
 						path={true}
 						iconSize={120}
 						speed={0.35}
 					>
-						<InitiativeCard initiative={initiatives[5]} />
 						<InitiativeCard initiative={initiatives[6]} />
 					</OrbitingCircles>
 				</div>
 
 				{/* Orbiting Circles Container - Mobile */}
-				<div className="relative flex md:hidden h-[450px] w-full items-center justify-center">
+				<div className="relative flex md:hidden h-[400px] w-full items-center justify-center">
 					{/* Center Logo */}
 					<div className="absolute z-10 flex items-center justify-center">
 						<div className="bg-[#f8d264] rounded-full w-20 h-20 shadow-xl flex items-center justify-center p-4 aspect-square">
@@ -207,15 +299,14 @@ export default function Initiatives() {
 						</div>
 					</div>
 
-					{/* Single orbit with all 7 cards */}
+					{/* Single orbit with 6 cards (excluding RiseAI since it's featured) */}
 					<OrbitingCircles
-						radius={150}
+						radius={140}
 						duration={70}
 						path={true}
-						iconSize={120}
+						iconSize={100}
 						speed={0.3}
 					>
-						<InitiativeCard initiative={initiatives[0]} />
 						<InitiativeCard initiative={initiatives[1]} />
 						<InitiativeCard initiative={initiatives[2]} />
 						<InitiativeCard initiative={initiatives[3]} />
