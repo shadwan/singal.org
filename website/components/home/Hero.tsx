@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import {
 	AcademicCapIcon,
@@ -69,14 +69,6 @@ export default function Hero() {
 		return () => clearInterval(interval);
 	}, []);
 
-	const goToPrevious = () => {
-		setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-	};
-
-	const goToNext = () => {
-		setCurrentIndex((prev) => (prev + 1) % projects.length);
-	};
-
 	// Get card position relative to center
 	const getCardStyle = (index: number) => {
 		const totalCards = projects.length;
@@ -91,18 +83,24 @@ export default function Hero() {
 
 		if (!isVisible) {
 			return {
-				transform: `translateX(${diff * 100}%) scale(0.7)`,
+				transform: `translateX(${diff * 100}%) scale(0.6)`,
 				opacity: 0,
 				zIndex: 0,
-				filter: "blur(4px)",
+				filter: "blur(8px)",
+				isCenter: false,
 			};
 		}
 
+		// Scale decreases more for cards further from center
+		const scale = isCenter ? 1 : Math.abs(diff) === 1 ? 0.8 : 0.65;
+		const blur = isCenter ? 0 : Math.abs(diff) === 1 ? 4 : 8;
+
 		return {
-			transform: `translateX(${diff * 85}%) scale(${isCenter ? 1 : 0.85})`,
-			opacity: isCenter ? 1 : 0.6,
+			transform: `translateX(${diff * 70}%) scale(${scale})`,
+			opacity: isCenter ? 1 : 0.7,
 			zIndex: isCenter ? 30 : 20 - Math.abs(diff),
-			filter: isCenter ? "blur(0px)" : "blur(2px)",
+			filter: `blur(${blur}px)`,
+			isCenter,
 		};
 	};
 
@@ -156,16 +154,22 @@ export default function Hero() {
 								return (
 									<div
 										key={project.name}
-										className="absolute transition-all duration-500 ease-out cursor-pointer"
+										className="absolute cursor-pointer"
 										style={{
 											transform: style.transform,
 											opacity: style.opacity,
 											zIndex: style.zIndex,
 											filter: style.filter,
+											transition: "transform 500ms ease-out, opacity 500ms ease-out, filter 500ms ease-out",
 										}}
 										onClick={() => setCurrentIndex(index)}
 									>
-										<div className="relative w-[260px] md:w-[300px] h-[380px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+										<div 
+											className="relative w-[260px] md:w-[300px] h-[380px] md:h-[400px] rounded-2xl overflow-hidden"
+											style={{
+												boxShadow: style.isCenter ? "-20px 0 25px -15px rgba(0,0,0,0.3), 20px 0 25px -15px rgba(0,0,0,0.3)" : "none",
+											}}
+										>
 											<Image
 												src={project.image}
 												alt={project.name}
@@ -176,25 +180,23 @@ export default function Hero() {
 											<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
 											{/* Content */}
-											<div className="absolute inset-0 p-6 flex flex-col justify-between">
-												{/* Badge */}
-												<div className="flex items-center gap-2">
-													<div className="bg-[#f8d264] p-2.5 rounded-xl shadow-lg">
-														<IconComponent className="w-6 h-6 text-black" />
-													</div>
-													<span className="text-white/90 text-sm font-semibold bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
+											<div className="absolute inset-0 p-5 flex flex-col justify-between transition-none">
+												{/* Badge Pill */}
+												<div className="flex items-center gap-2 bg-black/30 pl-2 pr-4 py-1.5 rounded-full w-fit transition-none">
+													<IconComponent className="w-4 h-4 text-white/90 transition-none" />
+													<span className="text-white/90 text-sm font-medium transition-none">
 														{project.name}
 													</span>
 												</div>
 
 												{/* Impact & Location */}
-												<div>
-													<p className="text-white text-xl md:text-2xl font-bold mb-2 drop-shadow-lg">
+												<div className="transition-none">
+													<p className="text-white text-xl md:text-2xl font-bold mb-2 drop-shadow-lg transition-none">
 														{project.impact}
 													</p>
-													<div className="flex items-center gap-1.5 text-white/80 text-sm md:text-base">
+													<div className="flex items-center gap-1.5 text-white/90 text-sm md:text-base transition-none">
 														<svg
-															className="w-5 h-5"
+															className="w-4 h-4 transition-none"
 															fill="currentColor"
 															viewBox="0 0 20 20"
 														>
@@ -213,35 +215,6 @@ export default function Hero() {
 								);
 							})}
 						</div>
-
-						{/* Navigation Arrows */}
-						<button
-							onClick={goToPrevious}
-							className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"
-						>
-							<ChevronLeft className="w-6 h-6 text-black" />
-						</button>
-						<button
-							onClick={goToNext}
-							className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-50 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"
-						>
-							<ChevronRight className="w-6 h-6 text-black" />
-						</button>
-					</div>
-
-					{/* Dots Navigation */}
-					<div className="flex justify-center gap-2 mt-6">
-						{projects.map((_, index) => (
-							<button
-								key={index}
-								onClick={() => setCurrentIndex(index)}
-								className={`w-2.5 h-2.5 rounded-full transition-all ${
-									index === currentIndex
-										? "bg-black w-8"
-										: "bg-black/30 hover:bg-black/50"
-								}`}
-							/>
-						))}
 					</div>
 				</div>
 			</div>
