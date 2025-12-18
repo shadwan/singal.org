@@ -120,7 +120,7 @@ export default function Hero() {
 	}, [currentIndex, isMobile]);
 
 	return (
-		<section className="bg-white py-16 lg:py-24">
+		<section className="bg-white py-8 lg:py-12">
 			<div className="container mx-auto px-4">
 				{/* Yellow Card Container */}
 				<div className="bg-[#f8d264] rounded-3xl p-8 md:p-12 lg:p-16">
