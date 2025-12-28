@@ -5,6 +5,8 @@ import { Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import Footer from "@/components/Footer";
+import { GlobalImpact } from "@/components/home/GlobalImpact";
+import Stories from "@/components/home/Stories";
 
 // Initiative data
 const initiatives = [
@@ -160,61 +162,54 @@ export default function AboutPage() {
 			</section>
 
 			{/* Initiatives Sections */}
-			{initiatives.map((initiative, index) => (
-				<section
-					key={initiative.title}
-					className={`py-16 md:py-20 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
-				>
-					<div className="container mx-auto px-4">
-						<div className="max-w-6xl mx-auto">
+			<section className="py-16 md:py-24 bg-white">
+				<div className="container mx-auto px-4">
+					<div className="max-w-6xl mx-auto space-y-20 md:space-y-28">
+						{initiatives.map((initiative, index) => (
 							<div
-								className={`grid lg:grid-cols-2 gap-12 items-center ${
-									index % 2 === 1 ? "lg:flex-row-reverse" : ""
-								}`}
+								key={initiative.title}
+								className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center`}
 							>
-								{/* Image - alternating sides */}
+								{/* Polaroid Image */}
 								<div className={index % 2 === 1 ? "lg:order-2" : ""}>
-									<div className="relative">
-										<div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200">
+									<div className="bg-white p-3 pb-16 shadow-xl rotate-1 hover:rotate-0 transition-transform duration-300">
+										<div className="aspect-[4/3] overflow-hidden bg-gray-100">
 											<Image
 												src={initiative.image}
 												alt={initiative.title}
 												fill
-												className="object-cover"
+												className="object-cover !relative"
 											/>
 										</div>
-										{/* Stat Badge */}
-										<div
-											className="absolute -bottom-4 -right-4 md:bottom-6 md:right-6 bg-white rounded-xl shadow-lg p-4"
-											style={{ borderLeft: `4px solid ${initiative.color}` }}
-										>
-											<div className="flex items-baseline gap-1">
-												{initiative.stats.prefix && (
-													<span className="text-2xl font-bold text-gray-900">
-														{initiative.stats.prefix}
-													</span>
-												)}
-												<NumberTicker
-													value={initiative.stats.value}
-													className="text-2xl md:text-3xl font-bold text-gray-900 font-mono"
+										{/* Caption with Stats */}
+										<div className="mt-4 px-1">
+											<div className="flex items-center gap-2 mb-1">
+												<div
+													className="w-2 h-2 rounded-full"
+													style={{ backgroundColor: initiative.color }}
 												/>
+												<span className="font-mono text-lg font-bold text-gray-900">
+													{initiative.stats.prefix || ""}{initiative.stats.value}+
+												</span>
+												<span className="text-gray-600 text-sm">
+													{initiative.stats.label}
+												</span>
 											</div>
-											<p className="text-gray-600 text-sm">
-												{initiative.stats.label}
+											<p className="text-gray-500 text-sm italic">
+												{initiative.caption}
 											</p>
 										</div>
 									</div>
-									<p className="text-center text-gray-500 text-sm mt-8">
-										{initiative.caption}
-									</p>
 								</div>
 
 								{/* Content */}
 								<div className={index % 2 === 1 ? "lg:order-1" : ""}>
 									<div
-										className="inline-block w-12 h-1 rounded-full mb-4"
+										className="inline-block px-3 py-1 rounded-full text-white text-sm font-medium mb-4"
 										style={{ backgroundColor: initiative.color }}
-									/>
+									>
+										{initiative.title}
+									</div>
 									<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
 										{initiative.title}
 									</h2>
@@ -228,10 +223,16 @@ export default function AboutPage() {
 									))}
 								</div>
 							</div>
-						</div>
+						))}
 					</div>
-				</section>
-			))}
+				</div>
+			</section>
+
+			{/* Global Impact Section */}
+			<GlobalImpact />
+
+			{/* Impact Stories Section */}
+			<Stories />
 
 			{/* Footer */}
 			<Footer />
