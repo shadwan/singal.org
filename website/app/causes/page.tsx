@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Hero from "@/components/causes/Hero";
 import CaseStudy from "@/components/causes/CaseStudy";
+import Donation from "@/components/home/Donation";
 import Footer from "@/components/Footer";
 
 // Default study for each category
@@ -72,6 +73,8 @@ function CausesContent() {
 					/>
 				</div>
 			)}
+
+			{selectedCategory && <Donation />}
 			
 			<Footer />
 		</>
