@@ -19,12 +19,12 @@ import {
 
 const navigation = {
 	causes: [
-		{ name: "Education", href: "/causes/education" },
-		{ name: "Shelter Homes", href: "/causes/shelter-homes" },
-		{ name: "Entrepreneurship", href: "/causes/entrepreneurship" },
-		{ name: "Youth Programs", href: "/causes/youth-entrepreneurship" },
-		{ name: "Medical Relief", href: "/causes/medical-relief" },
-		{ name: "Disaster Relief", href: "/causes/disaster-relief" },
+		{ name: "Education", href: "/causes?category=education" },
+		{ name: "Shelter Homes", href: "/causes?category=shelter-homes" },
+		{ name: "Entrepreneurship", href: "/causes?category=entrepreneurship" },
+		{ name: "Youth Programs", href: "/causes?category=youth-entrepreneurship" },
+		{ name: "Medical Relief", href: "/causes?category=medical-relief" },
+		{ name: "Disaster Relief", href: "/causes?category=disaster-relief" },
 	],
 	company: [
 		{ name: "About Us", href: "/about" },
