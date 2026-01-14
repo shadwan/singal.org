@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { Menu, X, Heart } from "lucide-react";
 
 const navItems = [
@@ -28,44 +29,73 @@ export default function Header() {
 	}, []);
 
 	return (
-		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-				isScrolled
-					? "bg-white shadow-md py-3"
-					: "bg-transparent py-5"
-			}`}
-		>
-			<div className="container mx-auto px-4">
-				<div className="flex items-center justify-between">
-					{/* Logo */}
-					<Link href="/" className="relative z-50">
-						<Image
-							src="/images/logo.svg"
-							alt="Singal Foundation"
-							width={140}
-							height={40}
-							className="h-10 w-auto"
-						/>
+		<header className="fixed top-0 left-0 right-0 z-50">
+			<div className="bg-[#1a1f36] text-white text-xs sm:text-sm">
+				<div className="container mx-auto px-4 py-2.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+					<span className="inline-flex items-center rounded-full bg-[#f8d264]/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f8d264]">
+						RiseAI
+					</span>
+					<span className="text-white/80">
+						The next evolution of education.
+					</span>
+					<Link
+						href="/riseai"
+						className="font-semibold text-[#f8d264] hover:text-white transition-colors"
+					>
+						Discover RiseAI
 					</Link>
+				</div>
+			</div>
+			<div
+				className={`transition-all duration-300 ${
+					isScrolled
+						? "bg-white shadow-md py-3"
+						: "bg-transparent py-5"
+				}`}
+			>
+				<div className="container mx-auto px-4">
+					<div className="flex items-center justify-between">
+						{/* Logo */}
+						<Link href="/" className="relative z-50">
+							<Image
+								src="/images/logo.svg"
+								alt="Singal Foundation"
+								width={140}
+								height={40}
+								className="h-10 w-auto"
+							/>
+						</Link>
 
-					{/* Desktop Navigation */}
-					<nav className="hidden lg:flex items-center gap-1">
-						{navItems.map((item) => (
-							<Link
-								key={item.name}
-								href={item.href}
-								className={`relative px-4 py-2 font-medium transition-colors group ${
-									isScrolled ? "text-gray-800" : "text-gray-800"
-								}`}
+						{/* Desktop Navigation */}
+						<nav className="hidden lg:flex items-center gap-1">
+							{navItems.map((item) => (
+								<Link
+									key={item.name}
+									href={item.href}
+									className={`relative px-4 py-2 font-medium transition-colors group ${
+										isScrolled ? "text-gray-800" : "text-gray-800"
+									}`}
+								>
+									{item.name}
+									<span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#f8d264] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+								</Link>
+							))}
+						</nav>
+
+					{/* Desktop CTAs */}
+					<div className="hidden lg:flex items-center gap-3">
+						<div className="relative rounded-full">
+							<ShineBorder
+								borderWidth={2}
+								shineColor={["#f8d264", "#8B5CF6", "#f8b864"]}
+							/>
+							<Button
+								asChild
+								className="relative bg-[#1a1f36] text-white hover:bg-[#111827] font-semibold px-6 rounded-full shadow-md"
 							>
-								{item.name}
-								<span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#f8d264] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-							</Link>
-						))}
-					</nav>
-
-					{/* Desktop Donate Button */}
-					<div className="hidden lg:block">
+								<Link href="/riseai">Discover RiseAI</Link>
+							</Button>
+						</div>
 						<Button
 							asChild
 							className="bg-[#f8d264] hover:bg-[#f8b864] text-black font-semibold px-6 rounded-full"
@@ -77,29 +107,31 @@ export default function Header() {
 						</Button>
 					</div>
 
-					{/* Mobile: Donate + Menu Toggle */}
-					<div className="flex items-center gap-3 lg:hidden">
-						<Button
-							asChild
-							size="sm"
-							className="bg-[#f8d264] hover:bg-[#f8b864] text-black font-semibold px-4 rounded-full"
-						>
-							<Link href="/donate">
-								<Heart className="w-4 h-4 fill-current" />
-							</Link>
-						</Button>
-						<button
-							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-							className={`p-2 rounded-lg transition-colors ${
-								isScrolled ? "text-gray-800" : "text-gray-800"
-							}`}
-						>
-							{isMobileMenuOpen ? (
-								<X className="w-6 h-6" />
-							) : (
-								<Menu className="w-6 h-6" />
-							)}
-						</button>
+
+						{/* Mobile: Donate + Menu Toggle */}
+						<div className="flex items-center gap-3 lg:hidden">
+							<Button
+								asChild
+								size="sm"
+								className="bg-[#f8d264] hover:bg-[#f8b864] text-black font-semibold px-4 rounded-full"
+							>
+								<Link href="/donate">
+									<Heart className="w-4 h-4 fill-current" />
+								</Link>
+							</Button>
+							<button
+								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+								className={`p-2 rounded-lg transition-colors ${
+									isScrolled ? "text-gray-800" : "text-gray-800"
+								}`}
+							>
+								{isMobileMenuOpen ? (
+									<X className="w-6 h-6" />
+								) : (
+									<Menu className="w-6 h-6" />
+								)}
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

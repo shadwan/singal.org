@@ -35,7 +35,7 @@ const initiatives = [
 		Icon: CpuChipIcon,
 		name: "RiseAI",
 		description: "The next evolution of education",
-		href: "/causes?category=education",
+		href: "/riseai",
 		color: "#8B5CF6",
 	},
 	{
@@ -206,11 +206,14 @@ export default function Initiatives() {
 								</div>
 
 								<Button
+									asChild
 									size="sm"
 									className="bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full"
 								>
-									Learn More
-									<ArrowRight className="ml-2 w-4 h-4" />
+									<Link href="/riseai">
+										Learn More
+										<ArrowRight className="ml-2 w-4 h-4" />
+									</Link>
 								</Button>
 							</div>
 
